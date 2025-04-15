@@ -27,6 +27,13 @@ public class Store {
 	
 	@NotBlank(message = "Il logo deve avere un nome")
 	private String logo_name;
+	
+	public Store(Long id, String store_name, String logo_name) {
+		super();
+		this.id = id;
+		this.store_name = store_name;
+		this.logo_name = logo_name;
+	}
 
 	public Long getId() {
 		return id;

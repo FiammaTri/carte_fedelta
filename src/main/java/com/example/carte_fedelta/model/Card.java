@@ -29,6 +29,12 @@ public class Card {
 	
 	//@Column(length = 100)
 	//private String notes;
+	
+	public Card(Long id, Long number) {
+		super();
+		this.id = id;
+		this.number = number;
+	}
 
 	public Long getId() {
 		return id;
@@ -53,7 +59,7 @@ public class Card {
 	public void setStore_name(Store store_name) {
 		this.store_name = store_name;
 	}
-
+/*
 	public String getNotes() {
 		return notes;
 	}
@@ -62,7 +68,7 @@ public class Card {
 		this.notes = notes;
 	}
 	
-	
+	*/
 	
 
 /*

@@ -3,6 +3,7 @@ package com.example.carte_fedelta;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -43,17 +44,23 @@ public class DataLoader implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+		if (storeRepository.count() == 0) {
+
 		//Creazione STORE
-		List<Store> store = STORE
-				.stream().map(store_name.get("store_name"), logo_name.get("logo_name"))
+		List<Store> stores = STORE
+				.stream().map(store -> new Store(null, store.get("store_name"), store.get("logo_name")))
 				.collect(Collectors.toList());
-		List<Store> savedStore = storeRepository.saveAll(store);
+		List<Store> savedStore = storeRepository.saveAll(stores);
+		}
 		
 		//Creazione CARD
-		List<Card> card = CARD
-				.stream().map(number.get("number"))
+		if (storeRepository.count() == 0) {
+		List<Card> cards = CARD
+				.stream().map(card -> new Card (null, card.get("number")))
 				.collect(Collectors.toList());
-		List<Store> savedCard = storeRepository.saveAll(card);
+		List<Card> savedCard = cardRepository.saveAll(cards);
+		}
+		
 	}
 
 	
