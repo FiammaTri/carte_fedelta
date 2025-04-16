@@ -28,6 +28,8 @@ public class Store {
 	@NotBlank(message = "Il logo deve avere un nome")
 	private String logo_name;
 	
+	public Store() {}
+	
 	public Store(Long id, String store_name, String logo_name) {
 		super();
 		this.id = id;

@@ -30,10 +30,19 @@ public class Card {
 	//@Column(length = 100)
 	//private String notes;
 	
+	public Card() {}
+	
 	public Card(Long id, Long number) {
 		super();
 		this.id = id;
 		this.number = number;
+	}
+	
+	public Card(Long id, Long number, Store store) {
+		super();
+		this.id = id;
+		this.number = number;
+		this.store_name=store;
 	}
 
 	public Long getId() {
