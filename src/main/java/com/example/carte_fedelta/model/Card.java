@@ -20,7 +20,7 @@ public class Card {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "Il codice della carta è obbligatorio")
+	@Column(nullable = false)
 	private Long number;
 	
 	@ManyToOne

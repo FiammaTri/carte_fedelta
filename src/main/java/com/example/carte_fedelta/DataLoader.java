@@ -33,7 +33,7 @@ public class DataLoader implements CommandLineRunner {
 			Map.of("number", 654321L),
 			Map.of("number", 112233L),
 			Map.of("number", 445566L),
-			Map.of("number", 00001L));
+			Map.of("number", 11111L));
 	
 	@Autowired
 	public DataLoader(CardRepository cardRepository, StoreRepository storeRepository) {
@@ -54,7 +54,7 @@ public class DataLoader implements CommandLineRunner {
 		}
 		
 		//Creazione CARD
-		if (storeRepository.count() == 0) {
+		if (cardRepository.count() == 0) {
 		List<Card> cards = CARD
 				.stream().map(card -> new Card (null, card.get("number")))
 				.collect(Collectors.toList());
