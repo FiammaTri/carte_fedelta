@@ -59,5 +59,26 @@ public class CardController {
 	newCard.setId(null);
 	newCard.setNumber(card.getNumber());
 	newCard.setStore_name(store.get());
-	return cardRepository.save(newCard);}
+	return cardRepository.save(newCard);
 	}
+	
+	// metodo per modificare una card
+	@PutMapping("/{idCard}")
+	public Object editCard(@PathVariable("idCard") Long id, @RequestBody Card card, HttpServletResponse response) {
+		Optional<Card> editCard = cardRepository.findById(id);
+		if (!editCard.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Carta non trovata"));
+		}
+		Card newCard = editCard.get();
+		newCard.setNumber(card.getNumber());
+		return cardRepository.save(newCard);
+	}
+	
+	// metodo per cancellare una card
+	@DeleteMapping("/{idCard}")
+	public void deleteCard(@PathVariable("idCard") Long id, HttpServletResponse response) {
+		Optional<Card> deleteCard = cardRepository.findById(id);
+		
+		cardRepository.delete(deleteCard.get());
+		}
+}
