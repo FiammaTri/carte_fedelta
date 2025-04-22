@@ -27,8 +27,8 @@ public class DataLoader implements CommandLineRunner {
 			Map.of("store_name", "Bar", "logo_name", "Bar"),
 			Map.of("store_name", "Moby Dick", "logo_name", "Moby Dick"));
 
-	private static final List<Map<String, Long>> CARD = List.of(Map.of("number", 123456L), Map.of("number", 654321L),
-			Map.of("number", 112233L), Map.of("number", 445566L), Map.of("number", 11111L));
+	private static final List<Map<String, Long>> CARD = List.of(Map.of("number", 123456123456L), Map.of("number", 654321654321L),
+			Map.of("number", 112233112233L), Map.of("number", 445566445566L), Map.of("number", 1111111111L));
 
 	@Autowired
 	public DataLoader(CardRepository cardRepository, StoreRepository storeRepository) {

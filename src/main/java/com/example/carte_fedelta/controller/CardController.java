@@ -21,43 +21,45 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/api/card")
 @CrossOrigin(origins = {})
 public class CardController {
-	
+
 	@Autowired
 	private CardRepository cardRepository;
-	
+
 	@Autowired
 	private StoreRepository storeRepository;
-	
+
 	// metodo che restituisce tutte le card
 	@GetMapping
-	public List<Card> getAllCards(){
+	public List<Card> getAllCards() {
 		return cardRepository.findAll();
 	}
-	
+
 	// metodo che restituisce una specifica card (indicata nell'URL via id)
 	@GetMapping("/{id}")
 	public Object getCardById(@PathVariable Long id, HttpServletResponse response) {
-		
+
 		Optional<Card> card = cardRepository.findById(id);
-		
-		if(!card.isPresent()) {
+
+		if (!card.isPresent()) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return Collections.singletonMap("message", "Card non trovata");
 		}
-		
+
 		return card.get();
 	}
-	
+
 	// metodo per creare una card
 	@PostMapping("/{idStore}")
 	public Object createCard(@PathVariable("idStore") Long id, @RequestBody Card card, HttpServletResponse response) {
 		Optional<Store> store = storeRepository.findById(id);
 		if (!store.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Store non trovato"));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(Collections.singletonMap("message", "Store non trovato"));
 		}
-	Card newCard = new Card();
-	newCard.setId(null);
-	newCard.setNumber(card.getNumber());
-	newCard.setStore_name(store.get());
-	return cardRepository.save(newCard);}
+		Card newCard = new Card();
+		newCard.setId(null);
+		newCard.setNumber(card.getNumber());
+		newCard.setStore_name(store.get());
+		return cardRepository.save(newCard);
 	}
+}
