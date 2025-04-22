@@ -21,45 +21,64 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/api/card")
 @CrossOrigin(origins = {})
 public class CardController {
-
+	
 	@Autowired
 	private CardRepository cardRepository;
-
+	
 	@Autowired
 	private StoreRepository storeRepository;
-
+	
 	// metodo che restituisce tutte le card
 	@GetMapping
-	public List<Card> getAllCards() {
+	public List<Card> getAllCards(){
 		return cardRepository.findAll();
 	}
-
+	
 	// metodo che restituisce una specifica card (indicata nell'URL via id)
 	@GetMapping("/{id}")
 	public Object getCardById(@PathVariable Long id, HttpServletResponse response) {
-
+		
 		Optional<Card> card = cardRepository.findById(id);
-
-		if (!card.isPresent()) {
+		
+		if(!card.isPresent()) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return Collections.singletonMap("message", "Card non trovata");
 		}
-
+		
 		return card.get();
 	}
-
+	
 	// metodo per creare una card
 	@PostMapping("/{idStore}")
 	public Object createCard(@PathVariable("idStore") Long id, @RequestBody Card card, HttpServletResponse response) {
 		Optional<Store> store = storeRepository.findById(id);
 		if (!store.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(Collections.singletonMap("message", "Store non trovato"));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Store non trovato"));
 		}
-		Card newCard = new Card();
-		newCard.setId(null);
+	Card newCard = new Card();
+	newCard.setId(null);
+	newCard.setNumber(card.getNumber());
+	newCard.setStore_name(store.get());
+	return cardRepository.save(newCard);
+	}
+	
+	// metodo per modificare una card
+	@PutMapping("/{idCard}")
+	public Object editCard(@PathVariable("idCard") Long id, @RequestBody Card card, HttpServletResponse response) {
+		Optional<Card> editCard = cardRepository.findById(id);
+		if (!editCard.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Carta non trovata"));
+		}
+		Card newCard = editCard.get();
 		newCard.setNumber(card.getNumber());
-		newCard.setStore_name(store.get());
 		return cardRepository.save(newCard);
 	}
+	
+	// metodo per cancellare una card
+	@DeleteMapping("/{idCard}")
+	public void deleteCard(@PathVariable("idCard") Long id, HttpServletResponse response) {
+		Optional<Card> deleteCard = cardRepository.findById(id);
+		
+		cardRepository.delete(deleteCard.get());
+		}
 }
