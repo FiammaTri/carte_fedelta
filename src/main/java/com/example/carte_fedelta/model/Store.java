@@ -25,18 +25,23 @@ public class Store {
 	//@NotBlank(message = "Il negozio deve avere un logo")
 	private byte[] logo;
 	
+	@Column(name = "link")
+	private String link;
+	
 	@NotBlank(message = "Il logo deve avere un nome")
 	private String logo_name;
 	
 	public Store() {}
 	
-	public Store(Long id, String store_name, String logo_name) {
+	public Store(Long id, String store_name, String logo_name, String link) {
 		super();
 		this.id = id;
 		this.store_name = store_name;
 		this.logo_name = logo_name;
+		this.link = link;
 	}
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -68,16 +73,14 @@ public class Store {
 	public void setLogo_name(String logo_name) {
 		this.logo_name = logo_name;
 	}
-	
-	
-	
-/*
- * CREATE TABLE `carte_fedelta`.`store` (
-  `store_id` BIGINT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `logo` LONGBLOB NOT NULL,
-  `logo_name` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`store_id`));
 
- */
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+	
+	
 }

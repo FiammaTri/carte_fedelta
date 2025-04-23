@@ -21,11 +21,12 @@ public class DataLoader implements CommandLineRunner {
 	private final CardRepository cardRepository;
 	private final StoreRepository storeRepository;
 
-	private static final List<Map<String, String>> STORE = List.of(Map.of("store_name", "Ikea", "logo_name", "Ikea"),
-			Map.of("store_name", "Coop", "logo_name", "Coop"),
-			Map.of("store_name", "Esselunga", "logo_name", "Esselunga"),
-			Map.of("store_name", "Bar", "logo_name", "Bar"),
-			Map.of("store_name", "Moby Dick", "logo_name", "Moby Dick"));
+	private static final List<Map<String, String>> STORE = 
+			List.of(Map.of("store_name", "Ikea", "logo_name", "Ikea", "link", "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ikea_logo.svg/1280px-Ikea_logo.svg.png"),
+			Map.of("store_name", "Coop", "logo_name", "Coop", "link", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Coop_Italia_logo.svg/2560px-Coop_Italia_logo.svg.png"),
+			Map.of("store_name", "Esselunga", "logo_name", "Esselunga", "link", "https://upload.wikimedia.org/wikipedia/it/thumb/a/a4/Esselunga_logo.svg/2560px-Esselunga_logo.svg.png"),
+			Map.of("store_name", "Bar", "logo_name", "Bar", "link", "https://static.vecteezy.com/system/resources/previews/023/617/247/non_2x/coffee-shop-logo-free-png.png"),
+			Map.of("store_name", "Moby Dick", "logo_name", "Moby Dick", "link", "https://www.assirm.it/wp-content/uploads/2023/03/moby_color-scaled.jpg"));
 
 	private static final List<Map<String, Long>> CARD = List.of(Map.of("number", 123456L), Map.of("number", 654321L),
 			Map.of("number", 112233L), Map.of("number", 445566L), Map.of("number", 11111L));
@@ -43,7 +44,7 @@ public class DataLoader implements CommandLineRunner {
 
 			// Creazione STORE
 			List<Store> stores = STORE.stream()
-					.map(store -> new Store(null, store.get("store_name"), store.get("logo_name")))
+					.map(store -> new Store(null, store.get("store_name"), store.get("logo_name"), store.get("link")))
 					.collect(Collectors.toList());
 			List<Store> savedStore = storeRepository.saveAll(stores);
 		
