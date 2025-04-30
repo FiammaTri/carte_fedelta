@@ -25,7 +25,7 @@ public class Card {
 	
 	@ManyToOne
 	@JoinColumn(name = "store_name")
-	private Store store_name;
+	private Store store;
 	
 	//@Column(length = 100)
 	//private String notes;
@@ -42,7 +42,7 @@ public class Card {
 		super();
 		this.id = id;
 		this.number = number;
-		this.store_name=store;
+		this.store=store;
 	}
 
 	public Long getId() {
@@ -61,13 +61,15 @@ public class Card {
 		this.number = number;
 	}
 
-	public Store getStore_name() {
-		return store_name;
+	public Store getStore() {
+		return store;
 	}
 
-	public void setStore_name(Store store_name) {
-		this.store_name = store_name;
+	public void setStore(Store store) {
+		this.store = store;
 	}
+
+	
 /*
 	public String getNotes() {
 		return notes;

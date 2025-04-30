@@ -49,6 +49,11 @@ public class CardController {
 		return card.get();
 	}
 	
+	@GetMapping("/store/{storeName}")
+	public List<Card> getCardByStoreName (@PathVariable String storeName) {
+		return cardRepository.findByStore_StoreName(storeName);
+	}
+	
 	// metodo per creare una card
 	@PostMapping("/{idStore}")
 	public Object createCard(@PathVariable("idStore") Long id, @RequestBody Card card, HttpServletResponse response) {
@@ -59,7 +64,7 @@ public class CardController {
 	Card newCard = new Card();
 	newCard.setId(null);
 	newCard.setNumber(card.getNumber());
-	newCard.setStore_name(store.get());
+	newCard.setStore(store.get());
 	return cardRepository.save(newCard);
 	}
 	
@@ -82,4 +87,6 @@ public class CardController {
 		
 		cardRepository.delete(deleteCard.get());
 		}
+	
+	
 }

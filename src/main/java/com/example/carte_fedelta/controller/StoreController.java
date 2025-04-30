@@ -49,9 +49,9 @@ public class StoreController {
 			throws IOException {
 		Store store = new Store();
 		store.setId(null);
-		store.setName(name);
+		store.setStoreName(name);
 		store.setLogo(logo.getBytes());
-		store.setLogo_name(logo.getOriginalFilename());
+		store.setLogoName(logo.getOriginalFilename());
 		storeRepository.save(store);
 		return Collections.singletonMap("message", "Store aggiunto con successo");
 
@@ -73,9 +73,9 @@ public class StoreController {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Carta non trovata"));
 			}
 			Store newStore = editStore.get();
-			newStore.setName(name);
+			newStore.setStoreName(name);
 			newStore.setLogo(logo.getBytes());
-			newStore.setLogo_name(logo.getOriginalFilename());
+			newStore.setLogoName(logo.getOriginalFilename());
 			storeRepository.save(newStore);
 			return Collections.singletonMap("message", "Store modificato con successo");
 
