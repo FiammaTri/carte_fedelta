@@ -51,7 +51,7 @@ public class CardController {
 	
 	@GetMapping("/store/{storeName}")
 	public List<Card> getCardByStoreName (@PathVariable String storeName) {
-		return cardRepository.findByStore_StoreName(storeName);
+		return cardRepository.findByStore_StoreNameContaining(storeName);
 	}
 	
 	// metodo per creare una card

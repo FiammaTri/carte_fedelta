@@ -9,7 +9,7 @@ import com.example.carte_fedelta.model.Card;
 
 @Repository
 public interface CardRepository extends JpaRepository <Card, Long>{
-	List<Card> findByStore_StoreName(String storeName);
+	List<Card> findByStore_StoreNameContaining(String storeName);
 
 
 }
