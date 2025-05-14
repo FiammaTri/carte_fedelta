@@ -27,21 +27,30 @@ public class Card {
 	@JoinColumn(name = "store_name")
 	private Store store;
 	
-	//@Column(length = 100)
-	//private String notes;
+	@Column(length = 100)
+	private String notes;
 	
 	public Card() {}
 	
-	public Card(Long id, Long number) {
+	public Card(Long id, Long number, String notes) {
 		super();
 		this.id = id;
 		this.number = number;
+		this.notes = notes;
 	}
 	
 	public Card(Long id, Long number, Store store) {
 		super();
 		this.id = id;
 		this.number = number;
+		this.store = store;
+	}
+	
+	public Card(Long id, Long number, Store store, String notes) {
+		super();
+		this.id = id;
+		this.number = number;
+		this.notes = notes;
 		this.store=store;
 	}
 
@@ -69,8 +78,6 @@ public class Card {
 		this.store = store;
 	}
 
-	
-/*
 	public String getNotes() {
 		return notes;
 	}
@@ -79,7 +86,7 @@ public class Card {
 		this.notes = notes;
 	}
 	
-	*/
+
 	
 
 /*

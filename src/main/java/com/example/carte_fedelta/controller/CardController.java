@@ -64,6 +64,7 @@ public class CardController {
 	Card newCard = new Card();
 	newCard.setId(null);
 	newCard.setNumber(card.getNumber());
+	newCard.setNotes(card.getNotes());
 	newCard.setStore(store.get());
 	return cardRepository.save(newCard);
 	}
@@ -77,6 +78,7 @@ public class CardController {
 		}
 		Card newCard = editCard.get();
 		newCard.setNumber(card.getNumber());
+		newCard.setNotes(card.getNotes());
 		return cardRepository.save(newCard);
 	}
 	
