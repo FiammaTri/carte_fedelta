@@ -21,6 +21,7 @@ public class DataLoader implements CommandLineRunner {
 	private final CardRepository cardRepository;
 	private final StoreRepository storeRepository;
 
+	// mappe che poi conterranno delle card e store di default da aggiungere al primo avvio del server
 	private static final List<Map<String, String>> STORE = 
 			List.of(Map.of("storeName", "Ikea", "logoName", "Ikea", "link", "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Ikea_logo.svg/1280px-Ikea_logo.svg.png"),
 			Map.of("storeName", "Coop", "logoName", "Coop", "link", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Coop_Italia_logo.svg/2560px-Coop_Italia_logo.svg.png"),
