@@ -57,6 +57,20 @@ public class CardController {
 
 		return card.get();
 	}
+	
+	
+	/*@GetMapping("/search_number/{number}")
+	public Object getCardByNumber(@PathVariable Long number, HttpServletResponse response) {
+
+		Optional<Card> card = cardRepository.findByNumber(number);
+
+		if (!card.isPresent()) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return Collections.singletonMap("message", "Card non trovata");
+		}
+
+		return card.get();
+	}*/
 
 	/*
 	 * metodo che restituisce tutte le card di uno specifico store
