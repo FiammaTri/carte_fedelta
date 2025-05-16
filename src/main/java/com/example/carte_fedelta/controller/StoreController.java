@@ -42,6 +42,19 @@ public class StoreController {
 
 		return store.get();
 	}
+	
+	// metodo per ottenere uno store dal parametro storeName
+	@GetMapping("/byName/{storeName}")
+	public Object getStoreByStoreName(@PathVariable("storeName") String storeName, HttpServletResponse response) {
+		Optional<Store> store = storeRepository.findByStoreName(storeName);
+
+		if (!store.isPresent()) {
+			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			return Collections.singletonMap("message", "Store non trovato");
+		}
+
+		return store.get();
+	}
 
 	// metodo per creare uno store
 	@PostMapping
