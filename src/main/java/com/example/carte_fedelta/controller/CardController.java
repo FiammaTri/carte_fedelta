@@ -22,130 +22,64 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/api/card")
 @CrossOrigin(origins = {})
 public class CardController {
-
+	
 	@Autowired
 	private CardRepository cardRepository;
-
+	
 	@Autowired
 	private StoreRepository storeRepository;
-
+	
 	// metodo che restituisce tutte le card
 	@GetMapping
-	public List<Card> getAllCards() {
+	public List<Card> getAllCards(){
 		return cardRepository.findAll();
 	}
-
-	/*
-	 * metodo che restituisce una specifica card (indicata nell'URL via id)
-	 *
-	 * @param id -> id della card che vogliamo visualizzare
-	 * 
-	 * @param response -> oggetto per inviare il codice di risposta al client
-	 * 
-	 * @return oggetto contenente le informazioni della card ricercata (se
-	 * esistente)
-	 */
+	
+	// metodo che restituisce una specifica card (indicata nell'URL via id)
 	@GetMapping("/{id}")
 	public Object getCardById(@PathVariable Long id, HttpServletResponse response) {
-
+		
 		Optional<Card> card = cardRepository.findById(id);
-
-		if (!card.isPresent()) {
+		
+		if(!card.isPresent()) {
 			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return Collections.singletonMap("message", "Card non trovata");
 		}
-
+		
 		return card.get();
 	}
 	
-	
-	/*@GetMapping("/search_number/{number}")
-	public Object getCardByNumber(@PathVariable Long number, HttpServletResponse response) {
-
-		Optional<Card> card = cardRepository.findByNumber(number);
-
-		if (!card.isPresent()) {
-			response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			return Collections.singletonMap("message", "Card non trovata");
-		}
-
-		return card.get();
-	}*/
-
-	/*
-	 * metodo che restituisce tutte le card di uno specifico store
-	 * 
-	 * @param store -> nome dello store
-	 * 
-	 * @return lista con le card dello store ricercato
-	 */
-	@GetMapping("/store/{store}")
-	public List<Card> getCardByStoreName(@PathVariable String store) {
-		return cardRepository.findByStore_StoreNameContaining(store);
-	}
-
-	/*
-	 * metodo per creare una card
-	 * 
-	 * @param id -> id dello store
-	 * 
-	 * @param body card -> informazioni sulla card (note e numero)
-	 * 
-	 * @param response -> oggetto per inviare il codice di risposta al client
-	 * 
-	 * @return oggetto con le informazioni della card creata
-	 */
+	// metodo per creare una card
 	@PostMapping("/{idStore}")
 	public Object createCard(@PathVariable("idStore") Long id, @RequestBody Card card, HttpServletResponse response) {
 		Optional<Store> store = storeRepository.findById(id);
 		if (!store.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(Collections.singletonMap("message", "Store non trovato"));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Store non trovato"));
 		}
-		Card newCard = new Card();
-		newCard.setId(null);
-		newCard.setNumber(card.getNumber());
-		newCard.setNotes(card.getNotes());
-		newCard.setStore(store.get());
-		return cardRepository.save(newCard);
+	Card newCard = new Card();
+	newCard.setId(null);
+	newCard.setNumber(card.getNumber());
+	newCard.setStore_name(store.get());
+	return cardRepository.save(newCard);
 	}
-
-	/*
-	 * metodo per modificare una card
-	 * 
-	 * @param id -> id della card da modificare
-	 * 
-	 * @param body card -> nuove informazioni sulla card (note e numero)
-	 * 
-	 * @param response -> oggetto per inviare il codice di risposta al client
-	 * 
-	 * @return oggetto con le informazioni della card aggiornata
-	 */
+	
+	// metodo per modificare una card
 	@PutMapping("/{idCard}")
 	public Object editCard(@PathVariable("idCard") Long id, @RequestBody Card card, HttpServletResponse response) {
 		Optional<Card> editCard = cardRepository.findById(id);
 		if (!editCard.isPresent()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(Collections.singletonMap("message", "Carta non trovata"));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Carta non trovata"));
 		}
 		Card newCard = editCard.get();
 		newCard.setNumber(card.getNumber());
-		newCard.setNotes(card.getNotes());
 		return cardRepository.save(newCard);
 	}
-
-	/*
-	 * metodo per cancellare una card
-	 * 
-	 * @param id -> id della card da cancellare
-	 * 
-	 * @param response -> oggetto per inviare il codice di risposta al client
-	 */
+	
+	// metodo per cancellare una card
 	@DeleteMapping("/{idCard}")
 	public void deleteCard(@PathVariable("idCard") Long id, HttpServletResponse response) {
 		Optional<Card> deleteCard = cardRepository.findById(id);
-
+		
 		cardRepository.delete(deleteCard.get());
-	}
-
+		}
 }

@@ -19,7 +19,7 @@ public class Store {
 	Long id;
 	
 	@NotBlank(message = "Il negozio deve avere un nome")
-	private String storeName;
+	private String store_name;
 	
 	@Column(length = 100000000)
 	//@NotBlank(message = "Il negozio deve avere un logo")
@@ -29,18 +29,19 @@ public class Store {
 	private String link;
 	
 	@NotBlank(message = "Il logo deve avere un nome")
-	private String logoName;
+	private String logo_name;
 	
 	public Store() {}
 	
-	public Store(Long id, String storeName, String logoName, String link) {
+	public Store(Long id, String store_name, String logo_name, String link) {
 		super();
 		this.id = id;
-		this.storeName = storeName;
-		this.logoName = logoName;
+		this.store_name = store_name;
+		this.logo_name = logo_name;
 		this.link = link;
 	}
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -49,12 +50,12 @@ public class Store {
 		this.id = id;
 	}
 
-	public String getStoreName() {
-		return storeName;
+	public String getName() {
+		return store_name;
 	}
 
-	public void setStoreName(String storeName) {
-		this.storeName = storeName;
+	public void setName(String name) {
+		this.store_name = name;
 	}
 
 	public byte[] getLogo() {
@@ -65,6 +66,14 @@ public class Store {
 		this.logo = logo;
 	}
 
+	public String getLogo_name() {
+		return logo_name;
+	}
+
+	public void setLogo_name(String logo_name) {
+		this.logo_name = logo_name;
+	}
+
 	public String getLink() {
 		return link;
 	}
@@ -72,14 +81,6 @@ public class Store {
 	public void setLink(String link) {
 		this.link = link;
 	}
-
-	public String getLogoName() {
-		return logoName;
-	}
-
-	public void setLogoName(String logoName) {
-		this.logoName = logoName;
-	}
-
+	
 	
 }

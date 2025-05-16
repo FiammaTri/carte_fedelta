@@ -25,33 +25,24 @@ public class Card {
 	
 	@ManyToOne
 	@JoinColumn(name = "store_name")
-	private Store store;
+	private Store store_name;
 	
-	@Column(length = 100)
-	private String notes;
+	//@Column(length = 100)
+	//private String notes;
 	
 	public Card() {}
 	
-	public Card(Long id, Long number, String notes) {
+	public Card(Long id, Long number) {
 		super();
 		this.id = id;
 		this.number = number;
-		this.notes = notes;
 	}
 	
 	public Card(Long id, Long number, Store store) {
 		super();
 		this.id = id;
 		this.number = number;
-		this.store = store;
-	}
-	
-	public Card(Long id, Long number, Store store, String notes) {
-		super();
-		this.id = id;
-		this.number = number;
-		this.notes = notes;
-		this.store=store;
+		this.store_name=store;
 	}
 
 	public Long getId() {
@@ -70,14 +61,14 @@ public class Card {
 		this.number = number;
 	}
 
-	public Store getStore() {
-		return store;
+	public Store getStore_name() {
+		return store_name;
 	}
 
-	public void setStore(Store store) {
-		this.store = store;
+	public void setStore_name(Store store_name) {
+		this.store_name = store_name;
 	}
-
+/*
 	public String getNotes() {
 		return notes;
 	}
@@ -86,7 +77,7 @@ public class Card {
 		this.notes = notes;
 	}
 	
-
+	*/
 	
 
 /*
