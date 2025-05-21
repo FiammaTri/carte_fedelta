@@ -138,14 +138,21 @@ public class CardController {
 	 * metodo per cancellare una card
 	 * 
 	 * @param id -> id della card da cancellare
-	 * 
 	 * @param response -> oggetto per inviare il codice di risposta al client
+	 * 
+	 * @return messaggio di conferma (o errore se la card non viene trovata)
 	 */
 	@DeleteMapping("/{idCard}")
-	public void deleteCard(@PathVariable("idCard") Long id, HttpServletResponse response) {
+	public Object deleteCard(@PathVariable("idCard") Long id, HttpServletResponse response) {
 		Optional<Card> deleteCard = cardRepository.findById(id);
-
+		if(!deleteCard.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(Collections.singletonMap("message", "Carta non trovata"));
+		}
+		
 		cardRepository.delete(deleteCard.get());
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(Collections.singletonMap("message", "Card cancellata"));
 	}
 
 }

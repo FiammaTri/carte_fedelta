@@ -25,12 +25,24 @@ public class StoreController {
 	@Autowired
 	private StoreRepository storeRepository;
 
-	// metodo che restituisce tutti gli store
+	/* 
+	 * metodo che restituisce tutti gli store
+	 * 
+	 * @return list con tutti gli store
+	 */
 	@GetMapping
 	public List<Store> getAllStore() {
 		return storeRepository.findAll();
 	}
-
+	
+	/*
+	 * metodo per la ricerca di un solo solo store (tramite id)
+	 * 
+	 * @param id -> id dello store
+	 * @param response -> oggetto per inviare il codice di risposta al client
+	 * 
+	 * @return oggetto con le informazioni dello store ricercato, se presente
+	 */
 	@GetMapping("/{id}")
 	public Object getStoreById(@PathVariable Long id, HttpServletResponse response) {
 		Optional<Store> store = storeRepository.findById(id);
@@ -43,7 +55,14 @@ public class StoreController {
 		return store.get();
 	}
 	
-	// metodo per ottenere uno store dal parametro storeName
+	/* 
+	 * metodo per ottenere uno store dal parametro storeName
+	 * 
+	 * @param storeName	-> stringa contente il nome dello store
+	 * @param response
+	 * 
+	 * @return oggetto cone le informazioni dello store
+	 */
 	@GetMapping("/byName/{storeName}")
 	public Object getStoreByStoreName(@PathVariable("storeName") String storeName, HttpServletResponse response) {
 		Optional<Store> store = storeRepository.findByStoreName(storeName);
@@ -56,7 +75,14 @@ public class StoreController {
 		return store.get();
 	}
 
-	// metodo per creare uno store
+	/*
+	 * metodo per creare uno store
+	 * 
+	 * @param logo -> di tipo multipartfile per la gestione delle immagini
+	 * @param name -> stringa contenente il nome dello store
+	 * 
+	 * @return messaggio di conferma
+	 */
 	@PostMapping
 	public Object createStore(@RequestParam("logo") MultipartFile logo, @RequestParam("store_name") String name)
 			throws IOException {
@@ -69,21 +95,24 @@ public class StoreController {
 		return Collections.singletonMap("message", "Store aggiunto con successo");
 
 	}
+	
 
-	// metodo per cancellare uno store
-	@DeleteMapping("/{idStore}")
-	public void deleteStore(@PathVariable("idStore") Long id, HttpServletResponse response) {
-		Optional<Store> deleteStore = storeRepository.findById(id);
-
-		storeRepository.delete(deleteStore.get());
-	}
-
-	// metodo per modificare uno store
-		@PutMapping("/{idStore}")
-		public Object editCard(@PathVariable("idStore") Long id, @RequestParam("store_name") String name, @RequestParam("logo") MultipartFile logo, HttpServletResponse response)throws IOException {
+	/*
+	 * metodo per modificare uno store
+	 * 
+	 * @param id dello store da modificare (fine endpoint)
+	 * @param name -> nuovo nome dello store
+	 * @param file -> nuova immagine dello store
+	 * @param response
+	 * 
+	 * @return messaggio di conferma della modifica
+	 */
+	@PutMapping("/{idStore}")
+	public Object editCard(@PathVariable("idStore") Long id, @RequestParam("store_name") String name, @RequestParam("logo") MultipartFile logo, HttpServletResponse response)throws IOException {
 			Optional<Store> editStore = storeRepository.findById(id);
 			if (!editStore.isPresent()) {
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap("message", "Carta non trovata"));
+				return ResponseEntity.status(HttpStatus.NOT_FOUND)
+						.body(Collections.singletonMap("message", "Carta non trovata"));
 			}
 			Store newStore = editStore.get();
 			newStore.setStoreName(name);
@@ -92,5 +121,28 @@ public class StoreController {
 			storeRepository.save(newStore);
 			return Collections.singletonMap("message", "Store modificato con successo");
 
+	}
+
+	/*
+	 * metodo per cancellare uno store
+	 * 
+	 * @param id dello store da eliminare
+	 * @param response
+	 * 
+	 * @return messaggio di conferma (o errore se lo store non viene trovato)
+	 */
+	@DeleteMapping("/{idStore}")
+	public Object deleteStore(@PathVariable("idStore") Long id, HttpServletResponse response) {
+		Optional<Store> deleteStore = storeRepository.findById(id);
+
+		if(!deleteStore.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(Collections.singletonMap("message", "Store non trovato"));
 		}
+		
+		storeRepository.delete(deleteStore.get());
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(Collections.singletonMap("message", "Store cancellato"));
+	}
+
 }

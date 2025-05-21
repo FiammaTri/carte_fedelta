@@ -1,5 +1,7 @@
 package com.example.carte_fedelta.model;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -10,6 +12,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -21,6 +25,8 @@ public class Card {
 	private Long id;
 	
 	@Column(nullable = false)
+	@Min(100_000_000_000L)
+    @Max(999_999_999_999L)
 	private Long number;
 	
 	@ManyToOne
